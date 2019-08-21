@@ -1,0 +1,21 @@
+<table class="table table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <td scope="col"><b>#</b></td>
+      <td scope="col"><b>URL</b></td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @all_images.each_with_index do |image, index| %>
+      <tr>
+          <td scope="row"><%= link_to(index, image) %></td>
+          <td>
+            <%= link_to(image) do %>
+              <%= image_tag(image.url, :width => 200) %>
+            <% end %>
+          </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
