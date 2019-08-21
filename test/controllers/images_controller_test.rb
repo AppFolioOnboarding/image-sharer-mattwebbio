@@ -48,4 +48,23 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
       get image_path(-1)
     end
   end
+
+  test 'index should render' do
+    get images_path
+    assert_response :ok
+    assert_select('table')
+  end
+
+  test 'index should display image' do
+    image = Image.create!(url: 'https://learn.appfolio.com/apm/www/images/apm-logo-v2.png')
+    image2 = Image.create!(url: 'https://i.stack.imgur.com/RQvYG.png')
+    image3 = Image.create!(url: 'https://cdn4.buysellads.net/uu/1/49556/1565364760-1559831407-Monday_tp_desk_mobile1.jpg')
+
+    get images_path
+
+    assert_response :ok
+    assert_select 'img', src: image.url
+    assert_select 'img', src: image2.url
+    assert_select 'img', src: image3.url
+  end
 end
