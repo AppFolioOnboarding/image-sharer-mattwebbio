@@ -8,6 +8,6 @@ class ApplicationControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get home content' do
     get '/'
-    assert_select 'h1', 'Hello World'
+    assert_select 'a', 'Image Sharing Site'
   end
 end

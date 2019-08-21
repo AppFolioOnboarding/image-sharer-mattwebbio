@@ -1,0 +1,16 @@
+<% flash.each do |key, value| %>
+  <div class="alert alert-<%= key %>"><%= value %></div>
+<% end %>
+
+<div class="col-6">
+  <div class="row">
+    <%= form_with model: @image, :class => 'form-inline' do |f| %>
+      <div class="form-group">
+        <%= f.label :url, "Image URL:", :class => 'pr-2' %>
+        <%= f.text_field :url, :class => 'form-control' %>
+        <%= f.submit "Upload", :class => 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
