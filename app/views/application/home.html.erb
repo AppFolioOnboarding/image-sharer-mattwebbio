@@ -1,1 +1,17 @@
-<h1>Hello World</h1>
+<table class="table table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <td scope="col"><b>#</b></td>
+      <td scope="col"><b>URL</b></td>
+    </tr>
+  </thead>
+  <tbody>
+    <% Image.all.each_with_index do |image, index| %>
+      <tr>
+        <td scope="row"><%= index %></td>
+        <td><%= image_tag(image.url) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
