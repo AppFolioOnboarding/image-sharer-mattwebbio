@@ -67,4 +67,31 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_select 'img', src: image2.url
     assert_select 'img', src: image3.url
   end
+
+  test 'create should save tags' do
+    post images_path, params: { image: { url: 'https://learn.appfolio.com/apm/www/images/apm-logo-v2.png',
+                                         tag_list: 'tag1, tag2' } }
+
+    assert_redirected_to(Image.last)
+    assert_equal Image.last.tag_list, %w[tag1 tag2]
+  end
+
+  test 'index should display tags' do
+    Image.create!(url: 'https://learn.appfolio.com/apm/www/images/apm-logo-v2.png', tag_list: 'tag1, tag2')
+
+    get images_path
+
+    assert_response :ok
+    assert_select 'td', 'tag1, tag2'
+  end
+
+  test 'show should display tags' do
+    image = Image.create!(url: 'https://learn.appfolio.com/apm/www/images/apm-logo-v2.png',
+                          tag_list: 'tag1, tag2')
+
+    get image_path(image)
+
+    assert_response :ok
+    assert_select 'span', 'tag1, tag2'
+  end
 end
