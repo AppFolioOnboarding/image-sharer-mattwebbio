@@ -4,10 +4,15 @@
 
 <div class="col-6">
   <div class="row">
-    <%= form_with model: @image, :class => 'form-inline' do |f| %>
+    <%= form_with model: @image do |f| %>
       <div class="form-group">
-        <%= f.label :url, "Image URL:", :class => 'pr-2' %>
+        <%= f.label :url, "Image URL:"%>
         <%= f.text_field :url, :class => 'form-control' %>
+
+        <%= f.label :tag_list, "Tag List:", :class => 'pt-2' %>
+        <%= f.text_field :tag_list, :class => 'form-control' %>
+
+        <br />
         <%= f.submit "Upload", :class => 'btn btn-primary' %>
       </div>
     <% end %>
