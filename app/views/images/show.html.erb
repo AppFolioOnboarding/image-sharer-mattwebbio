@@ -2,5 +2,12 @@
   <div class="alert alert-<%= key %>"><%= value %></div>
 <% end %>
 
-
-<%= image_tag(@image.url) %>
+<div class="row">
+  <div class="col-6">
+    <%= image_tag(@image.url) %>
+  </div>
+  <div class="col-6">
+    <b>Image Tags:</b>
+    <%= @image.tag_list %>
+  </div>
+</div>
