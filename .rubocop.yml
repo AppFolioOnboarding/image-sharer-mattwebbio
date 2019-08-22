@@ -22,6 +22,9 @@ Layout/MultilineMethodCallIndentation:
 Metrics/LineLength:
   Max: 112  # Maximum line length from `rails new`
 
+Metrics/ClassLength:
+  Max: 150
+
 Rails:
   Enabled: true
 
