@@ -28,6 +28,9 @@
     </nav>
     <div class="container pt-2">
       <div class="jumbotron bg-light">
+        <% flash.each do |key, value| %>
+          <div class="alert alert-<%= key %>"><%= value %></div>
+        <% end %>
         <%= yield %>
       </div>
     </div>
