@@ -15,7 +15,7 @@
               <%= image_tag(image.url, :width => 200) %>
             <% end %>
           </td>
-        <td><%= image.tag_list %></td>
+        <td><%= image.tag_list.map { |t| link_to t, images_path(tag: t) }.join(', ').html_safe %></td>
       </tr>
     <% end %>
   </tbody>
