@@ -25,9 +25,17 @@
           <a class="nav-item nav-link active" href="/images/new">Upload Image <span class="sr-only">(current)</span></a>
         </div>
       </div>
+
+      <form class="form-inline" action="/" method="get">
+        <input class="form-control mr-sm-2" name="tag" type="search" placeholder="Search by Tag" aria-label="Tag">
+        <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
     </nav>
     <div class="container pt-2">
       <div class="jumbotron bg-light">
+        <% flash.each do |key, value| %>
+          <div class="alert alert-<%= key %>"><%= value %></div>
+        <% end %>
         <%= yield %>
       </div>
     </div>

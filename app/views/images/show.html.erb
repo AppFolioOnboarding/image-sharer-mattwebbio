@@ -1,13 +1,9 @@
-<% flash.each do |key, value| %>
-  <div class="alert alert-<%= key %>"><%= value %></div>
-<% end %>
-
 <div class="row">
   <div class="col-6">
     <%= image_tag(@image.url) %>
   </div>
   <div class="col-6">
     <b>Image Tags:</b>
-    <span><%= @image.tag_list %></span>
+    <span id="tags"><%= @image.tag_list.map { |t| link_to t, images_path(tag: t) }.join(', ').html_safe %></span>
   </div>
 </div>
