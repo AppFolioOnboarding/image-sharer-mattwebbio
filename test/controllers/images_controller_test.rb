@@ -44,9 +44,13 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'show should throw error when accessing nonexisting image' do
-    assert_raises ActiveRecord::RecordNotFound do
-      get image_path(-1)
-    end
+    Image.create!(url: 'https://learn.appfolio.com/apm/www/images/apm-logo-v2.png')
+
+    get image_path(-1)
+
+    assert_redirected_to(images_path)
+    follow_redirect!
+    assert_select 'div.alert-warning', text: 'That image wasn\'t found :('
   end
 
   test 'index should render' do
@@ -150,5 +154,47 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :ok
     assert_select 'div.alert-warning', text: 'No images found :('
+  end
+
+  test 'delete should destroy image in db' do
+    image = Image.create!(url: 'https://learn.appfolio.com/apm/www/images/apm-logo-v2.png',
+                          tag_list: 'all, one')
+
+    assert_difference 'Image.count', -1 do
+      delete image_path(image.id)
+    end
+  end
+
+  test 'delete should redirect and show successful deletion message' do
+    image = Image.create!(url: 'https://learn.appfolio.com/apm/www/images/apm-logo-v2.png',
+                          tag_list: 'all, one')
+
+    delete image_path(image.id)
+
+    assert_redirected_to(images_path)
+    follow_redirect!
+    assert_response :ok
+    assert_select 'div.alert-success', text: 'Image deleted successfully!'
+  end
+
+  test 'delete should remove image from index' do
+    image = Image.create!(url: 'https://learn.appfolio.com/apm/www/images/apm-logo-v2.png',
+                          tag_list: 'all, one')
+
+    delete image_path(image.id)
+    get images_path
+
+    assert_response :ok
+    assert_select 'img', false, src: image.url
+  end
+
+  test 'delete should fail if image doesn\'t exist' do
+    Image.create!(url: 'https://learn.appfolio.com/apm/www/images/apm-logo-v2.png')
+
+    delete image_path(-1)
+
+    assert_redirected_to(images_path)
+    follow_redirect!
+    assert_select 'div.alert-warning', text: 'That image wasn\'t found :('
   end
 end

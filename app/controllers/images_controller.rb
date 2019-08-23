@@ -1,4 +1,6 @@
 class ImagesController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
   def index
     @all_images = if params[:tag]
                     Image.tagged_with(params[:tag]).order('created_at DESC')
@@ -27,5 +29,16 @@ class ImagesController < ApplicationController
 
   def show
     @image = Image.find(params[:id])
+  end
+
+  def destroy
+    Image.destroy(params[:id])
+    flash[:success] = 'Image deleted successfully!'
+    redirect_to(images_path)
+  end
+
+  def not_found
+    flash[:warning] = 'That image wasn\'t found :('
+    redirect_to(images_path)
   end
 end
