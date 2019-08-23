@@ -23,7 +23,7 @@ Metrics/LineLength:
   Max: 112  # Maximum line length from `rails new`
 
 Metrics/ClassLength:
-  Max: 150
+  Max: 200
 
 Rails:
   Enabled: true
