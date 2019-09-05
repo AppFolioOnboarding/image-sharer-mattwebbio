@@ -1,7 +1,5 @@
 /* eslint-disable */
 
-import 'whatwg-fetch';
-
 const HEADERS = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
@@ -40,12 +38,11 @@ export function serialize(obj, prefix) {
 function checkResponseStatus(res) {
   const status = res.status;
   if (status === 204) {
+    window.location.pathname = '/feedbacks/';
     return Promise.resolve(); // No content
   } else if (status === 302) {
-    window.location.reload();
     return Promise.reject();
   } else if (status === 401 || status === 403) {
-    window.location.reload();
     return Promise.reject();
   } else if (status < 200 || status >= 300) {
     return res
@@ -72,4 +69,12 @@ export function post(path, body) {
     method: 'POST',
     redirect: 'error',
   }).then(checkResponseStatus);
+}
+
+/**
+ * Converts a form submission event to all its corresponding values
+ */
+export function formEventToValues(event) {
+  return Array.prototype.slice.call(event.target.elements)
+    .filter(e => e.value).reduce((map, v) => (map[v.name] = v.value, map), {});
 }
